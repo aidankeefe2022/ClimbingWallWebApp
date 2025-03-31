@@ -5,6 +5,6 @@ ENTRYPOINT ["top", "-b"]
 
 COPY . .
 
-RUN apt update && apt install sqlite3
+RUN apt update && apt install -y sqlite3
 
 RUN sqlite3 --version

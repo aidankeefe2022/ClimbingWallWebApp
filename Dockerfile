@@ -1,8 +1,6 @@
 FROM python:3.10-slim
 LABEL authors="aidan"
 
-ENTRYPOINT ["top", "-b"]
-
 WORKDIR /app
 
 COPY requirements.txt .

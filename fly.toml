@@ -3,7 +3,7 @@
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
 #
 
-app = 'flaskproject-purple-night-4057'
+app = 'ClimbingWallApp'
 primary_region = 'ord'
 
 [build]
@@ -17,6 +17,6 @@ primary_region = 'ord'
   processes = ['app']
 
 [[vm]]
-  memory = '1gb'
+  memory = '4gb'
   cpu_kind = 'shared'
   cpus = 1

@@ -1,12 +1,12 @@
-FROM ubuntu:latest
+FROM python:3.10-slim
 LABEL authors="aidan"
 
 ENTRYPOINT ["top", "-b"]
 
+WORKDIR /app
+
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
 COPY . .
 
-RUN apt -y update && apt install -y sqlite3
-
-RUN sqlite3 --version
-
-CMD["python3", "app.py"]
+CMD ["flask", "run"]

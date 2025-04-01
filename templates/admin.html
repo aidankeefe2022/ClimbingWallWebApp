@@ -1,0 +1,35 @@
+<div class="flex gap-3 py-2 px-5 border-b border-white rounded items-center">
+    <button hx-get="/" hx-swap="innerHtml" hx-target="#pageBody" class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">BACK</button>
+    <h3 class="text-center dark:text-gray-300 ml-auto text-2xl">ADMIN</h3>
+</div>
+<div class="flex flex-row">
+    <div class="w-1/2 relative overflow-x-auto shadow-md sm:rounded-lg space-y-8 mt-8">
+        <form class="max-w-sm mx-auto py-2 px-2 rounded bg-gray-300 space-y-4 mt-4" hx-post="/addUser" hx-swap="innerHTML" hx-target="#tb" method="POST"  hx-on::afterRequest="clearFields()">
+             <div>
+              <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-800">Name</label>
+                 <input type="text" id="name" name="name" class="block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-xs focus:ring-blue-300 focus:border-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+             </div>
+             <div class="flex space-y-4 mt-4">
+                 <input  type="submit" value="Add" id="small-input" class="block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-xs focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+             </div>
+        </form>
+    </div>
+    <div class="w-1/2 relative overflow-x-auto shadow-md sm:rounded-lg space-y-4 mt-4">
+        <h3 class="text-left dark:text-gray-300 ml-auto text-2xl space-y-4 mt-4">Users</h3>
+        <table class="w-full rounded text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 space-y-4 mt-4">
+        <thead class="text-xs text-gray-700 uppercase dark:text-gray-400 position:sticky top:0 max-hieght">
+            <tr>
+                <th scope="col" class="px-6 py-3 bg-gray-50 dark:bg-gray-800">
+                    Name
+                </th>
+                <th scope="col" class="px-6 py-3 bg-gray-50 dark:bg-gray-800">
+                    Delete
+                </th>
+            </tr>
+        </thead>
+        <tbody id="tb">
+            {%  include 'user_table_row.html' %}
+        </tbody>
+    </table>
+    </div>
+</div>

@@ -1,0 +1,45 @@
+<div class="flex gap-3 py-2 px-5 border-b border-white rounded items-center">
+    <button hx-get="/admin" hx-swap="innerHtml" hx-target="#pageBody" class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">Admin</button>
+    <button hx-get="/" hx-swap="innerHtml" hx-target="#pageBody" class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded ">Boulder</button>
+    <h3 class="text-center dark:text-gray-300 ml-auto text-2xl">TOP ROPE</h3>
+</div>
+<div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+<div class="flex flex-row border py-1">
+    <div class="w-1/2 relative overflow-x-auto shadow-md sm:rounded-lg space-y-4 mt-4">
+        {% include 'climb_insert_form.html' %}
+    </div>
+    <div class="w-1/2">
+        <canvas id="myChart" style="width:100%;max-width:700px;max-height:400px"></canvas>
+    </div>
+</div>
+
+
+
+<div class="relative shadow-md sm:rounded-lg position:sticky">
+    <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 space-y-4 mt-4">
+        <thead class="text-xs text-gray-700 uppercase dark:text-gray-400 position:sticky top:0 max-hieght">
+            <tr>
+                <th scope="col" class="px-6 py-3 bg-gray-50 dark:bg-gray-800">
+                    Name
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Color
+                </th>
+                <th scope="col" class="px-6 py-3 bg-gray-50 dark:bg-gray-800">
+                    Setter
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Grade
+                </th>
+                <th scope="col" class="px-6 py-3 bg-gray-50 dark:bg-gray-800">
+                    Delete
+                </th>
+            </tr>
+        </thead>
+        <tbody id="tb">
+            {%  include 'climb_table_row.html'%}
+        </tbody>
+    </table>
+</div>
+
+</div>

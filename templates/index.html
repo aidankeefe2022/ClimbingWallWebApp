@@ -5,27 +5,51 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.8/dist/chart.umd.min.js"></script>
 <script>
     let myChartInstance = undefined;
+
     Chart.defaults.color = "#fff";
+
+
 
     function clearFields() {
         document.getElementById('name').value = "";
-        document.getElementById('color').value = "";
-        // If you want to reset the dropdown to its first option:
-        document.getElementById('grade').value = "";
     }
 
-    async function updateChart() {
-        let resp = await fetch('/chartInfo', {method: 'GET'})
+    async function initChartTR() {
+        let resp = await fetch('/chartInfoTR', {method: 'GET'});
         let data = await resp.json()
         console.log(data)
-        let keys = Object.keys(data)
-        let values = Object.values(data)
+        let keys =data.labels
+        let values = data.values
         let maxValue = Math.max(...values)
 
-        const ctx = document.getElementById("myChart").getContext('2d');
+        chartOptions = {
+        responsive: true,
+        animation: {
+          duration: 1000, // adjust as needed
+        },
+        categoryPercentage: 1.0,
+        barPercentage: 0.98,
+        scales: {
+          y: {
+              beginAtZero: true,
+              min: 0,
+              max: maxValue + 1, // sets the max to 1 above the highest bar
+              ticks:{
+                stepSize: 1
+              }
+          }
+        },
+        plugins: {
+          legend: {
+            display: false // This hides the legend
+          }
+        }
+    }
 
-        if (myChartInstance) {
-            myChartInstance.destroy();
+        const ctx = document.getElementById("myChartTR").getContext('2d');
+
+        if(myChartInstance){
+            myChartInstance.destroy()
         }
 
         myChartInstance =  new Chart(ctx, {
@@ -37,33 +61,84 @@
                   data: values
                 }]
               },
-            options: {
-                categoryPercentage: 1.0,
-                barPercentage: 0.98,
-                scales: {
-                  y: {
-                      beginAtZero: true,
-                      min: 0,
-                      max: maxValue + 1, // sets the max to 1 above the highest bar
-                      ticks:{
-                        stepSize: 1
-                      }
-                  }
-                }
-            }
+            options: chartOptions
+        });
+    }
+
+    async function initChartBoulder() {
+        let resp = await fetch('/chartInfo', {method: 'GET'});
+        let data = await resp.json()
+        console.log(data)
+        let keys =data.labels
+        let values = data.values
+        let maxValue = Math.max(...values)
+
+        chartOptions = {
+        responsive: true,
+        animation: {
+          duration: 1000, // adjust as needed
+        },
+        categoryPercentage: 1.0,
+        barPercentage: 0.98,
+        scales: {
+          y: {
+              beginAtZero: true,
+              min: 0,
+              max: maxValue + 1, // sets the max to 1 above the highest bar
+              ticks:{
+                stepSize: 1
+              }
+          }
+        },
+        plugins: {
+          legend: {
+            display: false // This hides the legend
+          }
+        }
+    }
+
+        const ctx = document.getElementById("myChart").getContext('2d');
+
+        if(myChartInstance){
+            myChartInstance.destroy()
+        }
+
+        myChartInstance =  new Chart(ctx, {
+              type: "bar",
+              data: {
+                labels: keys,
+                datasets: [{
+                  backgroundColor: 'oklch(0.928 0.006 264.531)',
+                  data: values
+                }]
+              },
+            options: chartOptions
         });
     }
 
     document.addEventListener("DOMContentLoaded", function() {
-        updateChart();
+        initChartBoulder();
+        console.log(window.htmx)
         // Listen for the HTMX afterRequest event
-        document.body.addEventListener('htmx:afterRequest', () => {
-            updateChart()
-            clearFields()
+
+        document.body.addEventListener('updateChartBoulder', (evt) => {
+            initChartBoulder();
+            clearFields();
+        });
+
+        document.body.addEventListener('updateChartTR', (evt) => {
+            initChartTR();
+            clearFields();
+        });
+
+        document.body.addEventListener("formSubmit", (evt) => {
+            clearFields();
         })
 
-
     });
+
+
+
 </script>
 
 <head>

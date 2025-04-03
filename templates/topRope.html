@@ -1,43 +1,75 @@
-<div class="flex gap-3 py-2 px-5 border-b border-white rounded items-center">
-    <button hx-get="/admin" hx-swap="innerHtml" hx-target="#pageBody" class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">Admin</button>
-    <button hx-get="/" hx-swap="innerHtml" hx-target="#pageBody" class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded ">Boulder</button>
-    <h3 class="text-center dark:text-gray-300 ml-auto text-2xl">TOP ROPE</h3>
+<div class="fixed top-0 left-0 w-full z-50 flex gap-3 py-2 px-5 border-b border-white rounded items-center" style="background: #080832">
+    <button hx-get="/adminTR" hx-swap="innerHtml" hx-target="#pageBody" class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">Admin</button>
+    <button id="swapBtn" hx-get="/Boulder" hx-swap="innerHtml" hx-target="#pageBody" class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded ">Boulder</button>
+    <h3 class="text-center text-gray-300 ml-auto text-2xl">TOP ROPE</h3>
 </div>
-<div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-<div class="flex flex-row border py-1">
+<div class="overflow-x-auto shadow-md sm:rounded-lg mt-16">
+<div class="flex flex-row border py-1 position:sticky">
     <div class="w-1/2 relative overflow-x-auto shadow-md sm:rounded-lg space-y-4 mt-4">
-        {% include 'climb_insert_form.html' %}
+        <form id="insertForm" class="max-w-sm mx-auto py-2 px-2 rounded bg-gray-300" hx-post="/insertTR" hx-swap="innerHTML" hx-target="#tb" method="POST">
+            <div>
+              <label for="name" class="block mb-2 text-sm font-medium text-gray-900 text-gray-800">Name</label>
+               <input type="text" id="name" name="name" class="block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-xs focus:ring-blue-300 focus:border-blue-300 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500">
+          </div>
+            <div>
+              <label for="color" class="block mb-2 text-sm font-medium text-gray-900 text-gray-800">Color</label>
+              <select id="setter" name="color" class="block w-full p-2 text-gray-200 border border-gray-300 rounded-lg bg-gray-50 text-xs focus:ring-blue-300 focus:border-blue-300 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500">
+                  {%  for item in colors %}
+                      <option value="{{ item.color }}">{{ item.color }}</option>
+                  {%  endfor %}
+              </select>
+            </div>
+            <div>
+              <label for="setter" class="block mb-2 text-sm font-medium text-gray-900 text-gray-800">Setter</label>
+              <select id="setter" name="setter" class="block w-full p-2 text-gray-200 border border-gray-300 rounded-lg bg-gray-50 text-xs focus:ring-blue-300 focus:border-blue-300 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500">
+                  {%  for item in setters %}
+                    <option value="{{ item.name }}">{{ item.name }}</option>
+                  {%  endfor %}
+              </select>
+          </div>
+            <div>
+              <label for="grade" class="block mb-2 text-sm font-medium text-gray-900 text-gray-800">Grade</label>
+             <select id="setter" name="grade" class="block w-full p-2 text-gray-200 border border-gray-300 rounded-lg bg-gray-50 text-xs focus:ring-blue-300 focus:border-blue-300 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500">
+                  {%  for item in grades %}
+                      <option value="{{ item.grade }}">{{ item.grade }}</option>
+                  {%  endfor %}
+              </select>
+            </div>
+             <div class="flex space-y-4 mt-4">
+              <input  type="submit" value="Add" id="small-input" class="block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-xs focus:ring-blue-500 focus:border-blue-500 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500">
+          </div>
+</form>
     </div>
-    <div class="w-1/2">
-        <canvas id="myChart" style="width:100%;max-width:700px;max-height:400px"></canvas>
+    <div class="w-1/2 relative overflow-x-auto shadow-md sm:rounded-lg space-y-4 mt-4">
+        <canvas id="myChartTR" style="width:100%;max-height:400px;max-width:800px;"></canvas>
     </div>
 </div>
 
 
 
-<div class="relative shadow-md sm:rounded-lg position:sticky">
-    <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 space-y-4 mt-4">
-        <thead class="text-xs text-gray-700 uppercase dark:text-gray-400 position:sticky top:0 max-hieght">
+<div class="relative shadow-md sm:rounded-lg position:sticky space-y-4 mt-4">
+    <table class="w-full text-sm text-left rtl:text-right text-gray-400">
+        <thead class="text-xs text-gray-700 uppercase text-gray-400 position:sticky top:0 max-height">
             <tr>
-                <th scope="col" class="px-6 py-3 bg-gray-50 dark:bg-gray-800">
+                <th scope="col" class="px-6 py-3 bg-gray-50 bg-gray-800">
                     Name
                 </th>
                 <th scope="col" class="px-6 py-3">
                     Color
                 </th>
-                <th scope="col" class="px-6 py-3 bg-gray-50 dark:bg-gray-800">
+                <th scope="col" class="px-6 py-3 bg-gray-50 bg-gray-800">
                     Setter
                 </th>
                 <th scope="col" class="px-6 py-3">
                     Grade
                 </th>
-                <th scope="col" class="px-6 py-3 bg-gray-50 dark:bg-gray-800">
+                <th scope="col" class="px-6 py-3 bg-gray-50 bg-gray-800">
                     Delete
                 </th>
             </tr>
         </thead>
         <tbody id="tb">
-            {%  include 'climb_table_row.html'%}
+            {%  include 'tr_table_row.html'%}
         </tbody>
     </table>
 </div>

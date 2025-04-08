@@ -2,19 +2,19 @@
 
 {%  for item in data %}
 <tr>
-    <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap text-white bg-gray-800">
+    <th scope="row" class="px-6 py-4 font-medium whitespace-nowrap text-white bg-gray-800">
         {{ item.name }}
     </th>
-    <td class="px-6 py-4">
+    <td class="px-6 text-white py-4">
         {{ item.color }}
     </td>
-    <td class="px-6 py-4 bg-gray-800">
+    <td class="px-6 py-4 text-white bg-gray-800">
         {{ item.setter }}
     </td>
-    <td class="px-6 py-4">
+    <td class="px-6 text-white py-4">
         {{ item.grade }}
     </td>
-    <td class="px-6 py-4 bg-gray-800">
+    <td class="px-6 py-4 text-white bg-gray-800">
         <button class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2" hx-delete="\delete" hx-target="#tb" hx-vals='{"id":{{ item.id }}}'>Delete</button>
     </td>
 

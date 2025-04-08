@@ -1,11 +1,12 @@
 import json
-
-from flask import Flask, render_template, request, jsonify, make_response
+from flask_login import LoginManager, login_required
+from flask import Flask, render_template, request, jsonify, make_response,  redirect, url_for
 import sqlite3
 import pandas as pd
 from typing import Dict
 
 app = Flask(__name__)
+
 
 boulder_grades = [{"grade" : "v"+str(x)} for x in range(0, 10)]
 tr_grades = [{"grade" : "5."+str(x)} for x in range(5, 14)]
@@ -18,7 +19,6 @@ def hello_world():  # put application's code here
     data=boulder_data()
     setters = get_setters()
     climb_type=""
-
     return render_template("index.html", data=data, setters=setters, grades=boulder_grades, colors=colors)
 
 

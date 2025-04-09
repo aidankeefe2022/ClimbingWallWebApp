@@ -1,5 +1,3 @@
-import json
-from flask_login import LoginManager, login_required
 from flask import Flask, render_template, request, jsonify, make_response,  redirect, url_for
 import sqlite3
 import pandas as pd
